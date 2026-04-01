@@ -6,7 +6,7 @@ const {
   createDoctor,
   updateDoctor,
   deleteDoctor
-} = require('../controllers/doctorsController');
+} = require('../controllers/doctorController');
 
 /**
  * @swagger
