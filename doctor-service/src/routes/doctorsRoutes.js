@@ -1,12 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {
-  getAllDoctors,
-  getDoctorById,
-  createDoctor,
-  updateDoctor,
-  deleteDoctor
-} = require('../controllers/doctorsController');
+const { getAll, getById } = require('../controllers/doctorsController');
 
 /**
  * @swagger
@@ -18,11 +12,7 @@ const {
  *       200:
  *         description: Successfully retrieved all Doctor Service records
  */
-router.get('/', getAllDoctors);
-router.post('/', createDoctor);
-router.get('/:id', getDoctorById);
-router.put('/:id', updateDoctor);
-router.delete('/:id', deleteDoctor);
+router.get('/', getAll);
 
 /**
  * @swagger
@@ -42,5 +32,6 @@ router.delete('/:id', deleteDoctor);
  *       404:
  *         description: Record not found
  */
+router.get('/:id', getById);
 
 module.exports = router;
