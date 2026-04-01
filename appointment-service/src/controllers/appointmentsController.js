@@ -8,6 +8,8 @@ const getAll = (req, res) => {
   });
 };
 
+
+
 const createAppointment = (req, res) => {
   const { patientId, doctorId, date, time } = req.body;
 

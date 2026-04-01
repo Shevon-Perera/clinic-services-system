@@ -55,6 +55,8 @@ router.get('/', getAll);
  */
 router.post('/', createAppointment);
 
+
+
 /**
  * @swagger
  * /api/appointments/{id}:
