@@ -6,38 +6,30 @@ const {
   createDoctor,
   updateDoctor,
   deleteDoctor
-} = require('../controllers/doctorController');
-
-/**
- * @swagger
- * tags:
- *   name: Doctors
- *   description: Doctor management APIs
- */
+} = require('../controllers/doctorsController');
 
 /**
  * @swagger
  * /api/doctors:
  *   get:
- *     summary: Get all doctors
- *     tags: [Doctors]
+ *     summary: Get all Doctor Service records
+ *     tags: [Doctor Service]
  *     responses:
  *       200:
- *         description: List of doctors
- *   post:
- *     summary: Create a new doctor
- *     tags: [Doctors]
- *     responses:
- *       201:
- *         description: Doctor created successfully
+ *         description: Successfully retrieved all Doctor Service records
  */
+router.get('/', getAllDoctors);
+router.post('/', createDoctor);
+router.get('/:id', getDoctorById);
+router.put('/:id', updateDoctor);
+router.delete('/:id', deleteDoctor);
 
 /**
  * @swagger
  * /api/doctors/{id}:
  *   get:
- *     summary: Get doctor by ID
- *     tags: [Doctors]
+ *     summary: Get a Doctor Service record by ID
+ *     tags: [Doctor Service]
  *     parameters:
  *       - in: path
  *         name: id
@@ -46,19 +38,9 @@ const {
  *           type: integer
  *     responses:
  *       200:
- *         description: Doctor found
- *   put:
- *     summary: Update doctor by ID
- *     tags: [Doctors]
- *   delete:
- *     summary: Delete doctor by ID
- *     tags: [Doctors]
+ *         description: Successfully retrieved the Doctor Service record
+ *       404:
+ *         description: Record not found
  */
-
-router.get('/', getAllDoctors);
-router.get('/:id', getDoctorById);
-router.post('/', createDoctor);
-router.put('/:id', updateDoctor);
-router.delete('/:id', deleteDoctor);
 
 module.exports = router;
