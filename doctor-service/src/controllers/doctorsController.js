@@ -1,21 +1,57 @@
-const items = require('../data/data');
+const doctors = require('../data/data');
 
-const getAll = (req, res) => {
-  res.status(200).json({
-    service: process.env.SERVICE_NAME,
-    count: items.length,
-    data: items
-  });
+const getAllDoctors = (req, res) => {
+  res.status(200).json(doctors);
 };
 
-const getById = (req, res) => {
-  const item = items.find((entry) => entry.id === Number(req.params.id));
+const getDoctorById = (req, res) => {
+  const doctor = doctors.find(d => d.id === parseInt(req.params.id));
+  if (!doctor) {
+    return res.status(404).json({ message: 'Doctor not found' });
+  }
+  res.status(200).json(doctor);
+};
 
-  if (!item) {
-    return res.status(404).json({ message: 'Doctor Service record not found' });
+const createDoctor = (req, res) => {
+  const { name, specialty, availability } = req.body;
+  const newDoctor = {
+    id: doctors.length ? doctors[doctors.length - 1].id + 1 : 1,
+    name,
+    specialty,
+    availability
+  };
+  doctors.push(newDoctor);
+  res.status(201).json(newDoctor);
+};
+
+const updateDoctor = (req, res) => {
+  const doctor = doctors.find(d => d.id === parseInt(req.params.id));
+  if (!doctor) {
+    return res.status(404).json({ message: 'Doctor not found' });
   }
 
-  res.status(200).json(item);
+  const { name, specialty, availability } = req.body;
+  doctor.name = name ?? doctor.name;
+  doctor.specialty = specialty ?? doctor.specialty;
+  doctor.availability = availability ?? doctor.availability;
+
+  res.status(200).json(doctor);
 };
 
-module.exports = { getAll, getById };
+const deleteDoctor = (req, res) => {
+  const index = doctors.findIndex(d => d.id === parseInt(req.params.id));
+  if (index === -1) {
+    return res.status(404).json({ message: 'Doctor not found' });
+  }
+
+  const deleted = doctors.splice(index, 1);
+  res.status(200).json({ message: 'Doctor deleted successfully', deleted });
+};
+
+module.exports = {
+  getAllDoctors,
+  getDoctorById,
+  createDoctor,
+  updateDoctor,
+  deleteDoctor
+};
