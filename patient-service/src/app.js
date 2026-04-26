@@ -20,4 +20,17 @@ app.get('/', (req, res) => {
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/patients', patientsRoutes);
 
+app.use((err, req, res, next) => {
+  const statusCode = Number(err?.statusCode ?? err?.status) || 500;
+
+  if (process.env.NODE_ENV !== 'test') {
+    // eslint-disable-next-line no-console
+    console.error(err);
+  }
+
+  res.status(statusCode).json({
+    message: statusCode >= 500 ? 'Internal server error' : err.message || 'Request failed'
+  });
+});
+
 module.exports = app;
